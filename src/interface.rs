@@ -94,7 +94,7 @@ impl MenuMode {
 
     fn bg(&self) -> Color {
         match *self {
-            MenuMode::Normal => Color::Blue,
+            MenuMode::Normal => Color::DarkMagenta,
             MenuMode::ConfirmDelete => Color::Red,
         }
     }
@@ -171,7 +171,7 @@ impl<'a> Interface<'a> {
                 cursor::MoveTo(0, self.info_line_index()),
                 Clear(ClearType::CurrentLine),
                 SetBackgroundColor(self.menu_mode.bg()),
-                SetForegroundColor(Color::White),
+                SetForegroundColor(Color::Black),
                 cursor::MoveTo(1, self.info_line_index()),
                 Print(format!(
                     "{text:width$}",
@@ -246,8 +246,8 @@ impl<'a> Interface<'a> {
                     highlight = Color::Grey;
                 } else {
                     fg = Color::Black;
-                    bg = Color::White;
-                    highlight = Color::DarkGreen;
+                    bg = Color::DarkGrey;
+                    highlight = Color::Black;
                 }
             }
 
@@ -312,7 +312,7 @@ impl<'a> Interface<'a> {
                 let timing_color = if self.settings.lightmode {
                     Color::DarkBlue
                 } else {
-                    Color::Blue
+                    Color::DarkYellow
                 };
                 queue!(
                     screen,
