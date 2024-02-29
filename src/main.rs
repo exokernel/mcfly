@@ -1,3 +1,5 @@
+use config;
+use config::Source;
 use mcfly::dumper::Dumper;
 use mcfly::fake_typer;
 use mcfly::history::History;
@@ -101,7 +103,32 @@ fn handle_dump(settings: &Settings) {
 }
 
 fn main() {
-    let settings = Settings::parse_args();
+    let mut settings = Settings::parse_args();
+
+    // load ~/.config/mcfly/config.toml
+    let configpath = dirs::home_dir()
+        .expect("Homedir not found")
+        .join(".config/mcfly/config.toml");
+    let config = config::File::from(configpath);
+    let config_map = config.collect();
+    let config_map = config_map.unwrap_or_default();
+
+    // print out the config map
+    for (key, value) in config_map.iter() {
+        // print the key
+        print!("{}\n", key);
+        // key is &String
+        // check if it is equal to "colors"
+        if *key == "colors" {
+            let cmap = value.clone().into_table().unwrap();
+            for (k, v) in cmap.iter() {
+                print!("{}: {}", k, v);
+            }
+        }
+
+    }
+
+    let settings = settings.merge_config(config_map);
 
     match settings.mode {
         Mode::Add => {

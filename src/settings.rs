@@ -2,8 +2,11 @@ use crate::cli::{Cli, DumpFormat, SortOrder, SubCommand};
 use crate::shell_history;
 use crate::time::parse_timestamp;
 use clap::Parser;
+use config::Value;
+use crossterm::style::Color;
 use directories_next::{ProjectDirs, UserDirs};
 use regex::Regex;
+use std::collections::HashMap;
 use std::env;
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -82,6 +85,12 @@ pub struct TimeRange {
 }
 
 #[derive(Debug)]
+pub struct Colors {
+    pub menubar_bg: Color,
+    pub menubar_fg: Color,
+}
+
+#[derive(Debug)]
 pub struct Settings {
     pub mode: Mode,
     pub debug: bool,
@@ -114,6 +123,7 @@ pub struct Settings {
     pub sort_order: SortOrder,
     pub pattern: Option<Regex>,
     pub dump_format: DumpFormat,
+    pub colors: Colors,
 }
 
 impl Default for Settings {
@@ -150,11 +160,56 @@ impl Default for Settings {
             sort_order: SortOrder::default(),
             pattern: None,
             dump_format: DumpFormat::default(),
+            colors: Colors {
+                menubar_bg: Color::Blue,
+                menubar_fg: Color::White,
+            },
         }
     }
 }
 
 impl Settings {
+
+    pub fn merge_config(&mut self, _config_map: HashMap<String, Value>) -> &mut Settings {
+        // config_map should have a colors key, with a another map as its value
+        // that should have a menubar key with a map as its value
+        // that should have a bg and fg key with string values
+        // transform the string values into Color enums and set the colors struct
+        //if let Some(v) = config_map.get("colors") {
+        //    let colors_map = v.as_table().unwrap();
+        //    if let Some(Value::Table(menubar)) = colora_map.get("menubar") {
+        //        if let Some(Value::String(bg)) = menubar.get("bg") {
+        //            self.colors.menubar_bg = match bg.to_lowercase().as_str() {
+        //                "black" => Color::Black,
+        //                "blue" => Color::Blue,
+        //                "cyan" => Color::Cyan,
+        //                "green" => Color::Green,
+        //                "magenta" => Color::Magenta,
+        //                "red" => Color::Red,
+        //                "white" => Color::White,
+        //                "yellow" => Color::Yellow,
+        //                _ => Color::Blue,
+        //            };
+        //        }
+        //        if let Some(Value::String(fg)) = menubar.get("fg") {
+        //            self.colors.menubar_fg = match fg.to_lowercase().as_str() {
+        //                "black" => Color::Black,
+        //                "blue" => Color::Blue,
+        //                "cyan" => Color::Cyan,
+        //                "green" => Color::Green,
+        //                "magenta" => Color::Magenta,
+        //                "red" => Color::Red,
+        //                "white" => Color::White,
+        //                "yellow" => Color::Yellow,
+        //                _ => Color::White,
+        //            };
+        //        }
+        //    }
+        //}
+
+        self
+    }
+
     pub fn parse_args() -> Settings {
         let cli = Cli::parse();
 
