@@ -170,42 +170,35 @@ impl Default for Settings {
 
 impl Settings {
 
-    pub fn merge_config(&mut self, _config_map: HashMap<String, Value>) -> &mut Settings {
+    pub fn merge_config(&mut self, config_map: HashMap<String, Value>) -> &mut Settings {
         // config_map should have a colors key, with a another map as its value
         // that should have a menubar key with a map as its value
         // that should have a bg and fg key with string values
         // transform the string values into Color enums and set the colors struct
-        //if let Some(v) = config_map.get("colors") {
-        //    let colors_map = v.as_table().unwrap();
-        //    if let Some(Value::Table(menubar)) = colora_map.get("menubar") {
-        //        if let Some(Value::String(bg)) = menubar.get("bg") {
-        //            self.colors.menubar_bg = match bg.to_lowercase().as_str() {
-        //                "black" => Color::Black,
-        //                "blue" => Color::Blue,
-        //                "cyan" => Color::Cyan,
-        //                "green" => Color::Green,
-        //                "magenta" => Color::Magenta,
-        //                "red" => Color::Red,
-        //                "white" => Color::White,
-        //                "yellow" => Color::Yellow,
-        //                _ => Color::Blue,
-        //            };
-        //        }
-        //        if let Some(Value::String(fg)) = menubar.get("fg") {
-        //            self.colors.menubar_fg = match fg.to_lowercase().as_str() {
-        //                "black" => Color::Black,
-        //                "blue" => Color::Blue,
-        //                "cyan" => Color::Cyan,
-        //                "green" => Color::Green,
-        //                "magenta" => Color::Magenta,
-        //                "red" => Color::Red,
-        //                "white" => Color::White,
-        //                "yellow" => Color::Yellow,
-        //                _ => Color::White,
-        //            };
-        //        }
-        //    }
-        //}
+
+        if let Some(colors_config) = config_map.get("colors") {
+            if let Ok(colors_config) = colors_config.clone().into_table() {
+
+                if let Some(menubar_config) = colors_config.get("menubar") {
+                    if let Ok(menubar_config) = menubar_config.clone().into_table() {
+                        if let Some(menubar_bg) = menubar_config.get("bg") {
+                            if let Ok(menubar_bg) = menubar_bg.clone().into_string() {
+                                if let Ok(menubar_bg) = Color::from_str(menubar_bg.as_str()) {
+                                    self.colors.menubar_bg = menubar_bg;
+                                }
+                            }
+                        }
+                        if let Some(menubar_fg) = menubar_config.get("fg") {
+                            if let Ok(menubar_fg) = menubar_fg.clone().into_string() {
+                                if let Ok(menubar_fg) = Color::from_str(menubar_fg.as_str()) {
+                                    self.colors.menubar_fg = menubar_fg;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         self
     }
