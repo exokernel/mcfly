@@ -113,7 +113,7 @@ fn main() {
     let config_map = config.collect();
     let config_map = config_map.unwrap_or_default();
 
-    let settings = settings.merge_config(config_map);
+    settings.merge_config(config_map);
 
     match settings.mode {
         Mode::Add => {

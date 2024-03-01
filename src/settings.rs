@@ -170,7 +170,7 @@ impl Default for Settings {
 
 impl Settings {
 
-    pub fn merge_config(&mut self, config_map: HashMap<String, Value>) -> &mut Settings {
+    pub fn merge_config(&mut self, config_map: HashMap<String, Value>) {
         // config_map should have a colors key, with a another map as its value
         // that should have a menubar key with a map as its value
         // that should have a bg and fg key with string values
@@ -199,8 +199,6 @@ impl Settings {
                 }
             }
         }
-
-        self
     }
 
     pub fn parse_args() -> Settings {
