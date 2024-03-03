@@ -171,32 +171,20 @@ impl Default for Settings {
 impl Settings {
 
     pub fn merge_config(&mut self, config_map: HashMap<String, Value>) {
-        // config_map should have a colors key, with a another map as its value
-        // that should have a menubar key with a map as its value
-        // that should have a bg and fg key with string values
-        // transform the string values into Color enums and set the colors struct
+        let menubar_config = config_map.get("colors")
+            .and_then(|v| v.clone().into_table().ok())
+            .and_then(|v| v.get("menubar").and_then(|v| v.clone().into_table().ok()));
 
-        if let Some(colors_config) = config_map.get("colors") {
-            if let Ok(colors_config) = colors_config.clone().into_table() {
-
-                if let Some(menubar_config) = colors_config.get("menubar") {
-                    if let Ok(menubar_config) = menubar_config.clone().into_table() {
-                        if let Some(menubar_bg) = menubar_config.get("bg") {
-                            if let Ok(menubar_bg) = menubar_bg.clone().into_string() {
-                                if let Ok(menubar_bg) = Color::from_str(menubar_bg.as_str()) {
-                                    self.colors.menubar_bg = menubar_bg;
-                                }
-                            }
-                        }
-                        if let Some(menubar_fg) = menubar_config.get("fg") {
-                            if let Ok(menubar_fg) = menubar_fg.clone().into_string() {
-                                if let Ok(menubar_fg) = Color::from_str(menubar_fg.as_str()) {
-                                    self.colors.menubar_fg = menubar_fg;
-                                }
-                            }
-                        }
-                    }
-                }
+        if let Some(menubar_config) = menubar_config {
+            if let Some(menubar_bg) = menubar_config.get("bg")
+                .and_then(|v| v.clone().into_string().ok())
+                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                self.colors.menubar_bg = menubar_bg;
+            }
+            if let Some(menubar_fg) = menubar_config.get("fg")
+                .and_then(|v| v.clone().into_string().ok())
+                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                self.colors.menubar_fg = menubar_fg;
             }
         }
     }
