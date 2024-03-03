@@ -169,7 +169,6 @@ impl Default for Settings {
 }
 
 impl Settings {
-
     pub fn merge_config(&mut self, config_map: HashMap<String, Value>) {
         let menubar_config = config_map.get("colors")
             .and_then(|v| v.clone().into_table().ok())

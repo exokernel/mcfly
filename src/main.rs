@@ -111,9 +111,10 @@ fn main() {
         .join(".config/mcfly/config.toml");
     let config = config::File::from(configpath);
     let config_map = config.collect();
-    let config_map = config_map.unwrap_or_default();
 
-    settings.merge_config(config_map);
+    if let Some(config_map) = config_map.ok() {
+        settings.merge_config(config_map);
+    }
 
     match settings.mode {
         Mode::Add => {
