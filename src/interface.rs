@@ -92,10 +92,9 @@ impl MenuMode {
         menu_text
     }
 
-    #[allow(dead_code)]
-    fn bg(&self) -> Color {
+    fn bg(&self, settings: &Settings) -> Color {
         match *self {
-            MenuMode::Normal => Color::Blue,
+            MenuMode::Normal => settings.colors.menubar_bg,
             MenuMode::ConfirmDelete => Color::Red,
         }
     }
@@ -171,7 +170,7 @@ impl<'a> Interface<'a> {
                 cursor::Hide,
                 cursor::MoveTo(0, self.info_line_index()),
                 Clear(ClearType::CurrentLine),
-                SetBackgroundColor(self.settings.colors.menubar_bg),
+                SetBackgroundColor(self.menu_mode.bg(self.settings)),
                 SetForegroundColor(self.settings.colors.menubar_fg),
                 cursor::MoveTo(1, self.info_line_index()),
                 Print(format!(
