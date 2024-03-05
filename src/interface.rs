@@ -187,9 +187,9 @@ impl<'a> Interface<'a> {
     fn prompt<W: Write>(&self, screen: &mut W) {
         let prompt_line_index = self.prompt_line_index();
         let fg = if self.settings.lightmode {
-            Color::Black
+            self.settings.colors.lightmode_colors.prompt
         } else {
-            Color::White
+            self.settings.colors.darkmode_colors.prompt
         };
         queue!(
             screen,
@@ -226,28 +226,28 @@ impl<'a> Interface<'a> {
         let mut index: usize = 0;
         for command in self.matches.iter() {
             let mut fg = if self.settings.lightmode {
-                Color::Black
+                self.settings.colors.lightmode_colors.results_fg
             } else {
-                Color::White
+                self.settings.colors.darkmode_colors.results_fg
             };
 
             let mut highlight = if self.settings.lightmode {
-                Color::DarkBlue
+                self.settings.colors.lightmode_colors.results_hl
             } else {
-                Color::DarkGreen
+                self.settings.colors.darkmode_colors.results_hl
             };
 
             let mut bg = Color::Reset;
 
             if index == self.selection {
                 if self.settings.lightmode {
-                    fg = Color::White;
-                    bg = Color::DarkGrey;
-                    highlight = Color::Grey;
+                    fg = self.settings.colors.lightmode_colors.results_selection_fg;
+                    bg = self.settings.colors.lightmode_colors.results_selection_bg;
+                    highlight = self.settings.colors.lightmode_colors.results_selection_hl;
                 } else {
-                    fg = Color::Black;
-                    bg = Color::White;
-                    highlight = Color::DarkGreen;
+                    fg = self.settings.colors.darkmode_colors.results_selection_fg;
+                    bg = self.settings.colors.darkmode_colors.results_selection_bg;
+                    highlight = self.settings.colors.darkmode_colors.results_selection_hl;
                 }
             }
 
