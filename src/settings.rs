@@ -152,7 +152,6 @@ pub struct Settings {
     pub colors: Colors,
 }
 
-
 impl Default for Settings {
     fn default() -> Settings {
         Settings {
@@ -224,14 +223,18 @@ impl Settings {
             .and_then(|v| v.get("menubar").and_then(|v| v.clone().into_table().ok()));
 
         if let Some(menubar_config) = menubar_config {
-            if let Some(menubar_bg) = menubar_config.get("bg")
+            if let Some(menubar_bg) = menubar_config
+                .get("bg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.menubar_bg = menubar_bg;
             }
-            if let Some(menubar_fg) = menubar_config.get("fg")
+            if let Some(menubar_fg) = menubar_config
+                .get("fg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.menubar_fg = menubar_fg;
             }
         }
@@ -241,44 +244,60 @@ impl Settings {
             .and_then(|v| v.get("darkmode").and_then(|v| v.clone().into_table().ok()));
 
         if let Some(darkmode_config) = darkmode_config {
-            if let Some(prompt) = darkmode_config.get("prompt")
+            if let Some(prompt) = darkmode_config
+                .get("prompt")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.prompt = prompt;
             }
-            if let Some(timing) = darkmode_config.get("timing")
+            if let Some(timing) = darkmode_config
+                .get("timing")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.timing = timing;
             }
-            if let Some(results_fg) = darkmode_config.get("results_fg")
+            if let Some(results_fg) = darkmode_config
+                .get("results_fg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_fg = results_fg;
             }
-            if let Some(results_bg) = darkmode_config.get("results_bg")
+            if let Some(results_bg) = darkmode_config
+                .get("results_bg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_bg = results_bg;
             }
-            if let Some(results_hl) = darkmode_config.get("results_hl")
+            if let Some(results_hl) = darkmode_config
+                .get("results_hl")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_hl = results_hl;
             }
-            if let Some(results_selection_fg) = darkmode_config.get("results_selection_fg")
+            if let Some(results_selection_fg) = darkmode_config
+                .get("results_selection_fg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_selection_fg = results_selection_fg;
             }
-            if let Some(results_selection_bg) = darkmode_config.get("results_selection_bg")
+            if let Some(results_selection_bg) = darkmode_config
+                .get("results_selection_bg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_selection_bg = results_selection_bg;
             }
-            if let Some(results_selection_hl) = darkmode_config.get("results_selection_hl")
+            if let Some(results_selection_hl) = darkmode_config
+                .get("results_selection_hl")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.darkmode_colors.results_selection_hl = results_selection_hl;
             }
         }
@@ -288,44 +307,60 @@ impl Settings {
             .and_then(|v| v.get("lightmode").and_then(|v| v.clone().into_table().ok()));
 
         if let Some(lightmode_config) = lightmode_config {
-            if let Some(prompt) = lightmode_config.get("prompt")
+            if let Some(prompt) = lightmode_config
+                .get("prompt")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.prompt = prompt;
             }
-            if let Some(timing) = lightmode_config.get("timing")
+            if let Some(timing) = lightmode_config
+                .get("timing")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.timing = timing;
             }
-            if let Some(results_fg) = lightmode_config.get("results_fg")
+            if let Some(results_fg) = lightmode_config
+                .get("results_fg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_fg = results_fg;
             }
-            if let Some(results_bg) = lightmode_config.get("results_bg")
+            if let Some(results_bg) = lightmode_config
+                .get("results_bg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_bg = results_bg;
             }
-            if let Some(results_hl) = lightmode_config.get("results_hl")
+            if let Some(results_hl) = lightmode_config
+                .get("results_hl")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_hl = results_hl;
             }
-            if let Some(results_selection_fg) = lightmode_config.get("results_selection_fg")
+            if let Some(results_selection_fg) = lightmode_config
+                .get("results_selection_fg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_selection_fg = results_selection_fg;
             }
-            if let Some(results_selection_bg) = lightmode_config.get("results_selection_bg")
+            if let Some(results_selection_bg) = lightmode_config
+                .get("results_selection_bg")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_selection_bg = results_selection_bg;
             }
-            if let Some(results_selection_hl) = lightmode_config.get("results_selection_hl")
+            if let Some(results_selection_hl) = lightmode_config
+                .get("results_selection_hl")
                 .and_then(|v| v.clone().into_string().ok())
-                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                .and_then(|v| Color::from_str(v.as_str()).ok())
+            {
                 self.colors.lightmode_colors.results_selection_hl = results_selection_hl;
             }
         }
