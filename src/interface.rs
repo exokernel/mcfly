@@ -310,9 +310,9 @@ impl<'a> Interface<'a> {
                 .join(" ");
 
                 let timing_color = if self.settings.lightmode {
-                    Color::DarkBlue
+                    self.settings.colors.lightmode_colors.timing
                 } else {
-                    Color::Blue
+                    self.settings.colors.darkmode_colors.timing
                 };
                 queue!(
                     screen,

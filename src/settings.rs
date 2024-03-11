@@ -95,6 +95,7 @@ pub struct Colors {
 #[derive(Debug)]
 pub struct DarkModeColors {
     pub prompt: Color,
+    pub timing: Color,
     pub results_fg: Color,
     pub results_bg: Color,
     pub results_hl: Color,
@@ -106,6 +107,7 @@ pub struct DarkModeColors {
 #[derive(Debug)]
 pub struct LightModeColors {
     pub prompt: Color,
+    pub timing: Color,
     pub results_fg: Color,
     pub results_bg: Color,
     pub results_hl: Color,
@@ -190,6 +192,7 @@ impl Default for Settings {
                 menubar_fg: Color::White,
                 darkmode_colors: DarkModeColors {
                     prompt: Color::White,
+                    timing: Color::Blue,
                     results_fg: Color::White,
                     results_bg: Color::Black,
                     results_hl: Color::Blue,
@@ -199,6 +202,7 @@ impl Default for Settings {
                 },
                 lightmode_colors: LightModeColors {
                     prompt: Color::Black,
+                    timing: Color::DarkBlue,
                     results_fg: Color::Black,
                     results_bg: Color::White,
                     results_hl: Color::Blue,
@@ -242,6 +246,11 @@ impl Settings {
                 .and_then(|v| Color::from_str(v.as_str()).ok()) {
                 self.colors.darkmode_colors.prompt = prompt;
             }
+            if let Some(timing) = darkmode_config.get("timing")
+                .and_then(|v| v.clone().into_string().ok())
+                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                self.colors.darkmode_colors.timing = timing;
+            }
             if let Some(results_fg) = darkmode_config.get("results_fg")
                 .and_then(|v| v.clone().into_string().ok())
                 .and_then(|v| Color::from_str(v.as_str()).ok()) {
@@ -283,6 +292,11 @@ impl Settings {
                 .and_then(|v| v.clone().into_string().ok())
                 .and_then(|v| Color::from_str(v.as_str()).ok()) {
                 self.colors.lightmode_colors.prompt = prompt;
+            }
+            if let Some(timing) = lightmode_config.get("timing")
+                .and_then(|v| v.clone().into_string().ok())
+                .and_then(|v| Color::from_str(v.as_str()).ok()) {
+                self.colors.lightmode_colors.timing = timing;
             }
             if let Some(results_fg) = lightmode_config.get("results_fg")
                 .and_then(|v| v.clone().into_string().ok())
